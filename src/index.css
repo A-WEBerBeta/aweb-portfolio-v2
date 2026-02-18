@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: var(--font-sans);
+}
+
+body {
+  background: #07080a;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+/* Échelle typographique cohérente */
+.ui-body {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.ui-meta {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ui-micro {
+  font-size: 12px;
+  line-height: 1.35;
+}
