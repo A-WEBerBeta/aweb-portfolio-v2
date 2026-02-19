@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import Reveal from "./Reveal"; // ajuste le chemin
+
+const W3FORMS_ACCESS_KEY = "56a673df-e193-42c2-a070-2b3161195303";
 
 const CHANNELS = [
   {
@@ -64,6 +67,26 @@ function Underline() {
   );
 }
 
+function replacePurposeWording(text, purpose) {
+  if (purpose === "freelance") {
+    return text
+      .replaceAll("d’une opportunité", "d’un projet")
+      .replaceAll("d'une opportunité", "d'un projet")
+      .replaceAll("une opportunité", "un projet")
+      .replaceAll("opportunité", "projet");
+  }
+
+  if (purpose === "collab") {
+    return text
+      .replaceAll("d’une opportunité", "d’une collaboration")
+      .replaceAll("d'une opportunité", "d'une collaboration")
+      .replaceAll("une opportunité", "une collaboration")
+      .replaceAll("opportunité", "collaboration");
+  }
+
+  return text;
+}
+
 function buildMessage({ purpose, tone }) {
   const base = {
     pro: `Bonjour Aurélie,
@@ -75,9 +98,9 @@ Contexte : [poste/projet] · [durée] · [lieu/remote]
 Cordialement,
 [Nom]`,
 
-    simple: `Hello Aurélie,
+    simple: `Bonjour Aurélie,
 
-J’ai une proposition qui pourrait t’intéresser. Tu serais dispo pour en parler ?
+J’ai une proposition qui pourrait vous intéresser. Seriez-vous disponible pour en parler ?
 
 Contexte : [poste/projet] · [durée]
 
@@ -87,167 +110,348 @@ Merci,
     direct: `Bonjour,
 
 Proposition rapide : [poste/projet] · [durée] · [remote/lieu].
-Disponible pour un échange ?
+Seriez-vous disponible pour un échange ?
 
 [Nom]`,
   };
 
-  let msg = base[tone] ?? base.pro;
-
-  if (purpose === "freelance") msg = msg.replace("opportunité", "projet");
-  if (purpose === "collab") msg = msg.replace("opportunité", "collaboration");
-
-  return msg;
+  const msg = base[tone] ?? base.pro;
+  return replacePurposeWording(msg, purpose);
 }
 
 export default function ContactBriefV3() {
   const [purpose, setPurpose] = useState("job");
   const [tone, setTone] = useState("pro");
+
   const [copied, setCopied] = useState(false);
+
+  // édition
+  const [dirty, setDirty] = useState(false);
+  const [message, setMessage] = useState("");
+
+  // infos expéditeur (optionnel)
+  const [senderName, setSenderName] = useState("");
+  const [senderEmail, setSenderEmail] = useState("");
+
+  // envoi
+  const [sending, setSending] = useState(false);
+  const [sendState, setSendState] = useState("idle"); // idle | ok | err
+  const [sendNote, setSendNote] = useState("");
+
+  // ✅ scan OK (2s)
+  const [okPulse, setOkPulse] = useState(false);
+  const [okScanKey, setOkScanKey] = useState(0);
+  const okPulseTimer = useRef(null);
 
   const generated = useMemo(
     () => buildMessage({ purpose, tone }),
     [purpose, tone],
   );
-
-  const [message, setMessage] = useState(generated);
-
-  // Met à jour si template change
-  useMemo(() => setMessage(generated), [generated]);
+  const displayedMessage = dirty ? message : generated;
 
   const copy = async () => {
-    await navigator.clipboard.writeText(message);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
+    try {
+      await navigator.clipboard.writeText(displayedMessage);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      //
+    }
   };
 
-  const mailHref = `mailto:aurelie.weber@email.com?subject=Contact&body=${encodeURIComponent(
-    message,
-  )}`;
+  const reset = () => {
+    setDirty(false);
+    setMessage("");
+    setSendState("idle");
+    setSendNote("");
+  };
+
+  const triggerOkScan = () => {
+    if (okPulseTimer.current) window.clearTimeout(okPulseTimer.current);
+    setOkScanKey((k) => k + 1);
+    setOkPulse(true);
+    okPulseTimer.current = window.setTimeout(() => setOkPulse(false), 2000);
+  };
+
+  const submit = async () => {
+    if (sending) return;
+
+    if (!displayedMessage.trim()) {
+      setSendState("err");
+      setSendNote("Message vide.");
+      return;
+    }
+
+    setSending(true);
+    setSendState("idle");
+    setSendNote("");
+
+    try {
+      const payload = {
+        access_key: W3FORMS_ACCESS_KEY,
+        subject: `Nouveau message portfolio — ${
+          PURPOSES.find((p) => p.id === purpose)?.label ?? "Contact"
+        }`,
+        from_name: senderName || "Visiteur portfolio",
+        email: senderEmail || undefined,
+        message: displayedMessage,
+        purpose,
+        tone,
+        source: "portfolio",
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (data?.success) {
+        setSendState("ok");
+        setSendNote("Message envoyé. Merci !");
+        triggerOkScan();
+
+        window.setTimeout(() => {
+          reset();
+        }, 1600);
+      } else {
+        setSendState("err");
+        setSendNote(data?.message || "Échec de l’envoi.");
+      }
+    } catch {
+      setSendState("err");
+      setSendNote("Erreur réseau. Veuillez réessayer.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
-    <div className="h-full w-full px-12 flex items-center">
-      <div className="w-full grid grid-cols-12 gap-12 items-start">
-        {/* ===== GAUCHE ===== */}
-        <div className="col-span-12 lg:col-span-4">
-          {/* <h2 className="text-[64px] leading-none font-semibold text-white">
-            Prendre contact
-          </h2> */}
-
-          <div className="mt-6 text-white/65 text-[18px] max-w-[38ch]">
-            Une question, un projet ou une opportunité ? Choisissez le canal qui
-            vous convient. Le message peut être adapté avant envoi.
-          </div>
-
-          <div className="mt-14 space-y-10">
-            {CHANNELS.map((c) => (
-              <a
-                key={c.id}
-                href={c.href}
-                target="_blank"
-                rel="noreferrer"
-                className="group block"
-              >
-                <div className="text-[30px] font-semibold text-white/85 group-hover:text-white transition-colors">
-                  {c.label}
-                </div>
-                <div className="mt-2 mono text-[12px] tracking-[0.18em] text-white/40">
-                  {c.meta}
-                </div>
-                <Underline />
-              </a>
-            ))}
-          </div>
-
-          <div className="mt-16 mono text-[12px] tracking-[0.18em] text-white/40">
-            VERDUN · METZ · NANCY · REMOTE POSSIBLE
-          </div>
-        </div>
-
-        {/* ===== DROITE ===== */}
-        <div className="col-span-12 lg:col-span-8 border-l border-white/10 pl-10">
-          <div className="mono text-[12px] tracking-[0.18em] text-white/45">
-            INITIER UN ÉCHANGE
-          </div>
-
-          {/* INTENTION */}
-          <div className="mt-10">
-            <div className="mono text-[12px] tracking-[0.18em] text-white/35">
-              INTENTION
+    <Reveal preset="scale" once={false} amount={0.18} className="h-full w-full">
+      <div className="h-full w-full px-12 flex items-center">
+        <div className="w-full grid grid-cols-12 gap-12 items-start">
+          {/* ===== GAUCHE ===== */}
+          <Reveal
+            preset="left"
+            once={false}
+            amount={0.22}
+            className="col-span-12 lg:col-span-4"
+          >
+            <div className="text-white/65 text-[18px] max-w-[38ch]">
+              Une question, un projet ou une opportunité ? Choisissez le canal
+              que vous préférez — ou envoyez un message directement ici.
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-3">
-              {PURPOSES.map((p) => (
-                <Chip
-                  key={p.id}
-                  active={purpose === p.id}
-                  onClick={() => setPurpose(p.id)}
+            <div className="mt-14 space-y-10">
+              {CHANNELS.map((c) => (
+                <Reveal
+                  key={c.id}
+                  preset="up"
+                  once={false}
+                  amount={0.2}
+                  className="block"
                 >
-                  {p.label}
-                </Chip>
+                  <a
+                    href={c.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group block"
+                  >
+                    <div className="text-[30px] font-semibold text-white/85 group-hover:text-white transition-colors">
+                      {c.label}
+                    </div>
+                    <div className="mt-2 mono text-[12px] tracking-[0.18em] text-white/40">
+                      {c.meta}
+                    </div>
+                    <Underline />
+                  </a>
+                </Reveal>
               ))}
             </div>
 
-            <div className="mt-3 text-[14px] text-white/55">
-              {PURPOSES.find((p) => p.id === purpose)?.hint}
-            </div>
-          </div>
+            <Reveal preset="up" once={false} amount={0.2} className="mt-16">
+              <div className="mono text-[12px] tracking-[0.18em] text-white/40">
+                VERDUN · METZ · NANCY · REMOTE POSSIBLE
+              </div>
+            </Reveal>
+          </Reveal>
 
-          {/* TON */}
-          <div className="mt-10">
-            <div className="mono text-[12px] tracking-[0.18em] text-white/35">
-              TON
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-3">
-              {TONES.map((t) => (
-                <Chip
-                  key={t.id}
-                  active={tone === t.id}
-                  onClick={() => setTone(t.id)}
-                >
-                  {t.label}
-                </Chip>
-              ))}
-            </div>
-          </div>
-
-          {/* MESSAGE EDITABLE */}
-          <div className="mt-12 border border-white/10 bg-black/10">
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+          {/* ===== DROITE ===== */}
+          <Reveal
+            preset="right"
+            once={false}
+            amount={0.22}
+            className="col-span-12 lg:col-span-8 border-l border-white/10 pl-10"
+          >
+            <Reveal preset="up" once={false} amount={0.3}>
               <div className="mono text-[12px] tracking-[0.18em] text-white/45">
-                MESSAGE
+                INITIER UN ÉCHANGE
               </div>
+            </Reveal>
 
-              <button
-                onClick={copy}
-                className="mono text-[12px] tracking-[0.18em] text-white/65 hover:text-white"
-              >
-                {copied ? "COPIÉ ✓" : "COPIER"}
-              </button>
-            </div>
-
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full h-[240px] bg-transparent text-[14px] leading-relaxed text-white/80 p-5 resize-none outline-none"
-            />
-
-            <div className="flex items-center justify-between border-t border-white/10 px-5 py-4">
+            {/* INTENTION */}
+            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
               <div className="mono text-[12px] tracking-[0.18em] text-white/35">
-                RÉPONSE SOUS 24–48H
+                INTENTION
               </div>
 
-              <a
-                href={mailHref}
-                className="mono text-[12px] tracking-[0.18em] border border-white/15 px-5 py-3 text-white/80 hover:text-white"
-              >
-                ENVOYER →
-              </a>
-            </div>
-          </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {PURPOSES.map((p) => (
+                  <Chip
+                    key={p.id}
+                    active={purpose === p.id}
+                    onClick={() => {
+                      setPurpose(p.id);
+                      reset();
+                    }}
+                  >
+                    {p.label}
+                  </Chip>
+                ))}
+              </div>
+
+              <div className="mt-3 text-[14px] text-white/55">
+                {PURPOSES.find((p) => p.id === purpose)?.hint}
+              </div>
+            </Reveal>
+
+            {/* TON */}
+            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
+              <div className="mono text-[12px] tracking-[0.18em] text-white/35">
+                TON
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-3">
+                {TONES.map((t) => (
+                  <Chip
+                    key={t.id}
+                    active={tone === t.id}
+                    onClick={() => {
+                      setTone(t.id);
+                      reset();
+                    }}
+                  >
+                    {t.label}
+                  </Chip>
+                ))}
+              </div>
+            </Reveal>
+
+            {/* IDENTITÉ */}
+            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
+              <div className="grid grid-cols-12 gap-6">
+                <div className="col-span-12 md:col-span-6">
+                  <div className="mono text-[12px] tracking-[0.18em] text-white/35">
+                    VOTRE NOM
+                  </div>
+                  <input
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    className="mt-3 w-full border border-white/10 bg-black/10 px-4 py-3 text-[14px] text-white/80 outline-none"
+                    placeholder="(optionnel)"
+                  />
+                </div>
+
+                <div className="col-span-12 md:col-span-6">
+                  <div className="mono text-[12px] tracking-[0.18em] text-white/35">
+                    VOTRE EMAIL
+                  </div>
+                  <input
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                    className="mt-3 w-full border border-white/10 bg-black/10 px-4 py-3 text-[14px] text-white/80 outline-none"
+                    placeholder="(optionnel, mais pratique pour répondre)"
+                  />
+                </div>
+              </div>
+            </Reveal>
+
+            {/* MESSAGE */}
+            <Reveal preset="up" once={false} amount={0.22} className="mt-12">
+              <div className="border border-white/10 bg-black/10">
+                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+                  <div className="mono text-[12px] tracking-[0.18em] text-white/45">
+                    MESSAGE
+                  </div>
+
+                  <div className="flex items-center gap-6">
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="mono text-[12px] tracking-[0.18em] text-white/45 hover:text-white"
+                    >
+                      RÉINITIALISER
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={copy}
+                      className="mono text-[12px] tracking-[0.18em] text-white/65 hover:text-white"
+                    >
+                      {copied ? "COPIÉ ✓" : "COPIER"}
+                    </button>
+                  </div>
+                </div>
+
+                <textarea
+                  value={displayedMessage}
+                  onChange={(e) => {
+                    if (!dirty) setDirty(true);
+                    setMessage(e.target.value);
+                  }}
+                  className="w-full h-60 bg-transparent text-[14px] leading-relaxed text-white/80 p-5 resize-none outline-none"
+                />
+
+                <div className="relative flex items-center justify-between border-t border-white/10 px-5 py-4 overflow-hidden">
+                  {okPulse ? (
+                    <motion.div
+                      key={okScanKey}
+                      className="pointer-events-none absolute left-0 top-0 h-px w-35"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent, rgba(20,184,166,0.75), transparent)",
+                      }}
+                      initial={{ x: "-25%", opacity: 0 }}
+                      animate={{ x: "120%", opacity: [0, 1, 0] }}
+                      transition={{ duration: 0.9, ease: "easeInOut" }}
+                    />
+                  ) : null}
+
+                  <div className="mono text-[12px] tracking-[0.18em] text-white/35">
+                    {sendState === "ok"
+                      ? "ENVOI OK"
+                      : sendState === "err"
+                        ? "ENVOI IMPOSSIBLE"
+                        : "RÉPONSE SOUS 24–48H"}
+                    {sendNote ? (
+                      <span className="ml-3 text-white/55 tracking-normal normal-case">
+                        · {sendNote}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={submit}
+                    disabled={sending}
+                    className={[
+                      "mono text-[12px] tracking-[0.18em] border border-white/15 px-5 py-3 text-white/80 hover:text-white",
+                      sending ? "opacity-60 cursor-not-allowed" : "",
+                    ].join(" ")}
+                  >
+                    {sending ? "ENVOI..." : "ENVOYER →"}
+                  </button>
+                </div>
+              </div>
+            </Reveal>
+          </Reveal>
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }
