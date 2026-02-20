@@ -34,7 +34,7 @@ export default function SectionBackdrop({ variant = "plain" }) {
           <div
             className="absolute inset-0"
             style={{
-              opacity: 0.14,
+              opacity: 0.12,
               backgroundImage:
                 "radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)",
               backgroundSize: "22px 22px",

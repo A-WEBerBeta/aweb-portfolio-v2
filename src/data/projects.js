@@ -14,39 +14,39 @@ export const primaryProjects = [
     status: "ONLINE",
     tagline: "Interface sombre. Détails nets.",
     taglineSub:
-      "Navigation latérale, animations maîtrisées, sections rythmées. Une expérience “tech noir” sans effets gadget.",
+      "Une vitrine qui pose une ambiance, guide l’utilisateur, et reste rapide à parcourir.",
     summary:
-      "Conception et développement d'un site vitrine moderne pour un studio de tatouage fictif, avec un design sombre premium, une expérience mobile soignée et un parcours de prise de rendez-vous optimisé.",
+      "Site vitrine React pour un studio de tatouage fictif. Navigation claire, ambiance sombre maîtrisée et animations discrètes. Déployé sur Vercel avec un focus sur lisibilité et performance.",
     highlights: [
-      "Animations Motion (entrée, reveal, scroll)",
-      "UI Tailwind (sans radius, sans cartes)",
-      "Structure et rythme des sections",
+      "Structure en sections + navigation latérale (parcours simple, repères clairs)",
+      "Animations Framer Motion (reveal, transitions) calibrées pour rester discrètes",
+      "Système de styles Tailwind cohérent (typo, espacements, états) sans surcharge",
     ],
     image: obsidianImg,
     links: {
       live: "https://obsidian-ink-nancy.vercel.app/",
       repo: "https://github.com/A-WEBerBeta/obsidian-ink-website",
     },
-    metaBadges: ["UI", "Motion", "Responsive"],
   },
+
   {
     id: "moka-miel",
     index: "02",
     title: "Moka & Miel",
     subtitle: "Cosy café & expérience de précommande",
-    stack: ["WordPress", "Elementor", "SEO", "Performances"],
+    stack: ["WordPress", "Elementor", "CSS", "Responsive"],
     year: "2026",
-    role: "Intégration / UI",
+    role: "Intégration",
     status: "ONLINE",
     tagline: "Chaleureux, lisible, efficace.",
     taglineSub:
-      "Un site vitrine orienté contenu : structure propre, SEO, et performances au centre.",
+      "Une vitrine WordPress orientée contenu : on trouve vite, on lit bien, on comprend.",
     summary:
-      "Création d'un site vitrine immersif sous WordPress avec prototype de précommande et travail poussé sur la cohérence UI et le responsive.",
+      "Site vitrine WordPress pour un café fictif, centré sur la lisibilité et l’accès rapide aux informations clés. Mise en page chaleureuse et responsive optimisé pour mobile.",
     highlights: [
-      "Structure des pages & contenus",
-      "Optimisations (images, cache, Core Web Vitals)",
-      "Mise en page responsive",
+      "Intégration Elementor : sections réutilisables + mise en page cohérente",
+      "Responsive : ajustements mobiles (typographies, espacements, priorités de contenu)",
+      "Structure de contenu pensée “vitrine” (infos clés accessibles rapidement)",
     ],
     image: mokaImg,
     links: {
@@ -54,12 +54,12 @@ export const primaryProjects = [
       repo: null,
       demoVideo: "https://youtu.be/weJuvUnlI1g",
     },
-    metaBadges: ["WordPress", "SEO", "Perf"],
   },
+
   {
     id: "portfolio-v1",
     index: "03",
-    title: "Portfolio v.1",
+    title: "Portfolio V.1",
     subtitle: "Projet React - UI & architecture",
     stack: ["React", "Vite", "JavaScript", "CSS Modules"],
     year: "2025",
@@ -69,8 +69,13 @@ export const primaryProjects = [
     taglineSub:
       "Base initiale avant la refonte : structure, composants, premières itérations UI.",
     summary:
-      "Première version du portfolio : fondation des contenus et de l’architecture, avant le passage à une expérience “console”.",
-    highlights: ["Architecture React", "Composants de base", "Itérations UI"],
+      "Première version de mon portfolio React. Base d’architecture, organisation des composants et premières explorations UI avant la refonte actuelle.",
+    highlights: [
+      "Mise en place des pages et composants de base (structure)",
+      "Organisation du projet : dossiers, assets, styles (CSS Modules)",
+      "Premiers choix UI + itérations (ce qui a mené à la V2)",
+      "Projet “archive” documenté : utile pour montrer l’évolution",
+    ],
     image: portfolioImg,
     links: {
       live: null,

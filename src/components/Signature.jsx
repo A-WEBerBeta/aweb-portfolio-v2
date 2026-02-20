@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import Reveal from "./Reveal"; // adapte le chemin
+import Reveal from "./Reveal";
 
 function Info({ label, value }) {
   return (
@@ -16,7 +16,7 @@ function Info({ label, value }) {
 function SignalField({ active }) {
   return (
     <Reveal preset="scale" once={false} amount={0.22} className="w-full">
-      <div className="relative h-full min-h-130 w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden min-h-[340px] sm:min-h-[420px] lg:min-h-130">
         {/* filaments */}
         <motion.div
           className="absolute inset-0"
@@ -103,12 +103,12 @@ function SignalField({ active }) {
           ))}
         </motion.div>
 
-        {/* MICRO-INFOS */}
+        {/* MICRO-INFOS — DESKTOP (overlay à droite comme avant) */}
         <Reveal
           preset="right"
           once={false}
           amount={0.35}
-          className="absolute right-0 inset-y-0 flex flex-col justify-between top-0 space-y-6 text-right"
+          className="hidden lg:flex absolute right-0 inset-y-0 flex-col justify-between top-0 space-y-6 text-right"
         >
           <Info label="LOCALISATION" value="Verdun · Grand Est" />
           <Info label="MOBILITÉ" value="Metz · Nancy · Remote" />
@@ -116,6 +116,17 @@ function SignalField({ active }) {
           <Info label="FOCUS" value="Front-end · React" />
           <Info label="DÉMARRAGE" value="Immédiat" />
         </Reveal>
+
+        {/* MICRO-INFOS — MOBILE/TABLET (grille sous le visuel, pas d’overlay) */}
+        <div className="lg:hidden relative z-10 mt-6 border-t border-white/10 pt-5">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-5">
+            <Info label="LOCALISATION" value="Verdun · Grand Est" />
+            <Info label="MOBILITÉ" value="Metz · Nancy · Remote" />
+            <Info label="DISPONIBLE" value="Mission · Freelance · Poste" />
+            <Info label="FOCUS" value="Front-end · React" />
+            <Info label="DÉMARRAGE" value="Immédiat" />
+          </div>
+        </div>
       </div>
     </Reveal>
   );
@@ -124,7 +135,6 @@ function SignalField({ active }) {
 export default function AboutEditorial() {
   const ref = useRef(null);
 
-  // Déclenche plus tôt (évite "ça s'affiche quand je pars")
   const inView = useInView(ref, {
     amount: 0.18,
     once: false,
@@ -132,35 +142,34 @@ export default function AboutEditorial() {
   });
 
   return (
-    // IMPORTANT: h-full pour remplir le "1fr" de ton Section console
     <div ref={ref} className="h-full min-h-0">
-      {/* Centre verticalement TOUT le bloc (colonnes + phrase) */}
       <div className="h-full min-h-0 flex items-center">
         <div className="w-full">
-          {/* un peu d’air pour éviter “collé en haut/bas” */}
-          <div className="py-8">
-            {/* RANGÉE 1 : 2 colonnes */}
-            <div className="grid grid-cols-12 gap-12 items-center">
+          {/* padding responsive (évite les blocs énormes en petit écran) */}
+          <div className="py-6 sm:py-8 lg:py-8">
+            {/* GRID responsive */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start lg:items-center">
               {/* GAUCHE */}
-              <div className="col-span-12 lg:col-span-7">
-                <div className="space-y-16">
+              <div className="lg:col-span-7">
+                <div className="space-y-10 sm:space-y-12 lg:space-y-16">
+                  {/* 01 */}
                   <Reveal
                     preset="up"
                     once={false}
                     amount={0.22}
                     delay={0.18}
-                    className="grid grid-cols-12 gap-8"
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8"
                   >
-                    <div className="col-span-2 mono text-white/25 text-[12px] tracking-[0.30em]">
+                    <div className="mono text-white/25 text-[11px] sm:text-[12px] tracking-[0.30em] lg:col-span-2">
                       01
                     </div>
 
-                    <div className="col-span-10">
-                      <h3 className="text-[36px] leading-tight font-semibold text-white">
+                    <div className="lg:col-span-10">
+                      <h3 className="text-[26px] sm:text-[30px] lg:text-[36px] leading-tight font-semibold text-white">
                         Précision avant tout.
                       </h3>
 
-                      <div className="mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
+                      <div className="mt-4 sm:mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
                         <p>
                           Pendant quinze ans, j’ai exercé comme opticienne. Un
                           métier où chaque millimètre compte.
@@ -171,27 +180,28 @@ export default function AboutEditorial() {
                         </p>
                       </div>
 
-                      <div className="mt-7 h-px w-70 bg-teal-400/60" />
+                      <div className="mt-6 sm:mt-7 h-px w-56 sm:w-70 bg-teal-400/60" />
                     </div>
                   </Reveal>
 
+                  {/* 02 */}
                   <Reveal
                     preset="up"
                     once={false}
                     amount={0.22}
                     delay={0.36}
-                    className="grid grid-cols-12 gap-8"
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8"
                   >
-                    <div className="col-span-2 mono text-white/25 text-[12px] tracking-[0.30em]">
+                    <div className="mono text-white/25 text-[11px] sm:text-[12px] tracking-[0.30em] lg:col-span-2">
                       02
                     </div>
 
-                    <div className="col-span-10">
-                      <h3 className="text-[36px] leading-tight font-semibold text-white">
+                    <div className="lg:col-span-10">
+                      <h3 className="text-[26px] sm:text-[30px] lg:text-[36px] leading-tight font-semibold text-white">
                         Le déclic.
                       </h3>
 
-                      <div className="mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
+                      <div className="mt-4 sm:mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
                         <p>
                           La découverte du développement web a ouvert un nouveau
                           terrain d’expression : comprendre, structurer,
@@ -203,27 +213,28 @@ export default function AboutEditorial() {
                         </p>
                       </div>
 
-                      <div className="mt-7 h-px w-70 bg-white/15" />
+                      <div className="mt-6 sm:mt-7 h-px w-56 sm:w-70 bg-white/15" />
                     </div>
                   </Reveal>
 
+                  {/* 03 */}
                   <Reveal
                     preset="up"
                     once={false}
                     amount={0.22}
                     delay={0.54}
-                    className="grid grid-cols-12 gap-8"
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8"
                   >
-                    <div className="col-span-2 mono text-white/25 text-[12px] tracking-[0.30em]">
+                    <div className="mono text-white/25 text-[11px] sm:text-[12px] tracking-[0.30em] lg:col-span-2">
                       03
                     </div>
 
-                    <div className="col-span-10">
-                      <h3 className="text-[36px] leading-tight font-semibold text-white">
+                    <div className="lg:col-span-10">
+                      <h3 className="text-[26px] sm:text-[30px] lg:text-[36px] leading-tight font-semibold text-white">
                         Construire du durable.
                       </h3>
 
-                      <div className="mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
+                      <div className="mt-4 sm:mt-5 max-w-[60ch] text-white/75 leading-relaxed space-y-3">
                         <p>
                           Je développe des interfaces claires, rapides et
                           maintenables, avec une attention particulière à la
@@ -235,27 +246,27 @@ export default function AboutEditorial() {
                         </p>
                       </div>
 
-                      <div className="mt-7 h-px w-70 bg-white/15" />
+                      <div className="mt-6 sm:mt-7 h-px w-56 sm:w-70 bg-white/15" />
                     </div>
                   </Reveal>
                 </div>
               </div>
 
               {/* DROITE */}
-              <div className="col-span-12 lg:col-span-5">
+              <div className="lg:col-span-5">
                 <SignalField active={inView} />
               </div>
             </div>
 
-            {/* RANGÉE 2 : phrase SOUS les 2 colonnes */}
-
+            {/* phrase finale */}
             <motion.div
-              className="mt-25"
+              className="mt-12 sm:mt-16 lg:mt-25"
               initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.35, once: false }}
               transition={{ duration: 0.55, ease: "easeOut", delay: 0.2 }}
             >
-              <p className="max-w-[52ch] text-[18px] text-white/85 italic">
+              <p className="max-w-[52ch] text-[16px] sm:text-[18px] text-white/85 italic">
                 Interfaces sobres, lisibles et pensées pour un usage réel.
               </p>
             </motion.div>

@@ -35,10 +35,10 @@ export default function Section({
       </>
     ) : null;
 
-  // === Footer normal: dans le flow (FIN DU CONTENU)
+  // === Footer normal: dans le flow
   const flowFooter =
     showSectionSeparator || showSectionScanner ? (
-      <div className="mt-16 relative">
+      <div className="mt-10 sm:mt-12 lg:mt-16 relative">
         {showSectionSeparator ? (
           <div className="h-px w-full bg-white/10" />
         ) : null}
@@ -57,10 +57,8 @@ export default function Section({
       id={id}
       className={[
         "relative overflow-hidden",
-        // console = 100vh strict
         isConsole ? "h-dvh" : "h-auto",
-        // padding normal (pas de min-h sur les sections classiques)
-        isConsole ? "px-0 py-0" : "px-10 py-20",
+        isConsole ? "px-0 py-0" : "px-8 py-8",
       ].join(" ")}
     >
       <SectionBackdrop variant={backdrop} />
@@ -70,11 +68,11 @@ export default function Section({
           className="relative h-full w-full grid z-10"
           style={{ gridTemplateRows: shouldRenderHeader ? "auto 1fr" : "1fr" }}
         >
-          {/* Header console */}
+          {/* ===== HEADER CONSOLE ===== */}
           {shouldRenderHeader ? (
-            <div className="px-10 pt-14">
+            <div className="px-8 sm:px-10 pt-12 sm:pt-14">
               <div className="flex items-end justify-between gap-8">
-                <div className="max-w-245">
+                <div className="max-w-[90%] lg:max-w-245">
                   {kicker ? (
                     <div className="mono text-xs tracking-[0.35em] text-white/40">
                       {kicker}
@@ -83,7 +81,12 @@ export default function Section({
 
                   {title ? (
                     <motion.h2
-                      className="mt-6 text-6xl font-semibold text-white leading-[0.92] tracking-[-0.02em]"
+                      className="
+                        mt-4 sm:mt-6
+                        text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl
+                        font-semibold text-white
+                        leading-[0.92] tracking-[-0.02em]
+                      "
                       initial={{ opacity: 0, y: 18 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ amount: 0.35, once: true }}
@@ -101,25 +104,26 @@ export default function Section({
             </div>
           ) : null}
 
-          {/* Contenu console */}
+          {/* ===== CONTENU CONSOLE ===== */}
           <div
             className={[
               "min-h-0",
-              shouldRenderHeader ? "px-10 pt-10 pb-14" : "h-full",
+              shouldRenderHeader
+                ? "px-8 sm:px-10 pt-8 sm:pt-10 pb-12 sm:pb-14"
+                : "h-full",
             ].join(" ")}
           >
             <div className="h-full min-h-0">{children}</div>
           </div>
 
-          {/* Footer overlay console */}
           {consoleFooter}
         </div>
       ) : (
         <div className="relative w-full z-10">
-          {/* Header normal */}
+          {/* ===== HEADER NORMAL ===== */}
           {shouldRenderHeader ? (
             <div className="flex items-end justify-between gap-8">
-              <div className="max-w-225">
+              <div className="max-w-[90%] lg:max-w-225">
                 {kicker ? (
                   <div className="mono text-xs tracking-[0.35em] text-white/40">
                     {kicker}
@@ -128,7 +132,12 @@ export default function Section({
 
                 {title ? (
                   <motion.h2
-                    className="mt-6 text-6xl font-semibold text-white leading-[0.95]"
+                    className="
+                      mt-4 sm:mt-6
+                      text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl
+                      font-semibold text-white
+                      leading-[0.95]
+                    "
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ amount: 0.35, once: true }}
@@ -145,27 +154,27 @@ export default function Section({
             </div>
           ) : null}
 
-          {/* Contenu normal */}
+          {/* ===== CONTENU NORMAL ===== */}
           {layout === "split" ? (
             <div
               className={
                 shouldRenderHeader
-                  ? "mt-10 grid grid-cols-12 gap-8"
+                  ? "mt-8 sm:mt-10 grid grid-cols-12 gap-8"
                   : "grid grid-cols-12 gap-8"
               }
             >
-              <div className="col-span-7 text-white/70 leading-relaxed">
+              <div className="col-span-12 lg:col-span-7 text-white/70 leading-relaxed">
                 {children}
               </div>
-              <div className="col-span-5 text-white/60" />
+
+              <div className="hidden lg:block col-span-5 text-white/60" />
             </div>
           ) : (
-            <div className={shouldRenderHeader ? "mt-10" : "mt-0"}>
+            <div className={shouldRenderHeader ? "mt-8 sm:mt-10" : "mt-0"}>
               {children}
             </div>
           )}
 
-          {/* Footer en flow (après le contenu) */}
           {flowFooter}
         </div>
       )}

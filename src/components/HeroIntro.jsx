@@ -56,7 +56,6 @@ function HeroBoot({ done }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
         >
-          {/* sweep */}
           <motion.div
             className="absolute top-0 bottom-0 w-130"
             style={{
@@ -83,33 +82,17 @@ function HeroBoot({ done }) {
   );
 }
 
-/**
- * Accents du HERO (sans grosses barres horizontales)
- * -> juste du mouvement continu + quelques marqueurs “console”
- */
 function HeroAccents() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* marqueurs discrets (L-corners) */}
-      <div className="absolute left-12 top-20 h-10 w-10 border-l border-t border-white/10" />
-      <div className="absolute right-12 top-20 h-10 w-10 border-r border-t border-white/10" />
-      <div className="absolute left-12 bottom-20 h-10 w-10 border-l border-b border-white/10" />
-      <div className="absolute right-12 bottom-20 h-10 w-10 border-r border-b border-white/10" />
+      {/* marqueurs discrets (L-corners) — desktop only */}
+      <div className="absolute left-3 sm:left-6 lg:left-12 top-16 sm:top-20 h-10 w-10 border-l border-t border-white/10" />
+      <div className="absolute right-3 sm:right-6 lg:right-12 top-16 sm:top-20 h-10 w-10 border-r border-t border-white/10" />
+      <div className="absolute left-3 sm:left-6 lg:left-12 bottom-16 sm:bottom-20 h-10 w-10 border-l border-b border-white/10" />
+      <div className="absolute right-3 sm:right-6 lg:right-12 bottom-16 sm:bottom-20 h-10 w-10 border-r border-b border-white/10" />
 
       {/* mini accent teal */}
-      <div className="absolute left-12 top-20 h-px w-44 bg-teal-400/55" />
-
-      {/* shimmer principal — visible + va plus loin */}
-      {/* <motion.div
-        className="absolute top-0 bottom-0 w-[380px]"
-        style={{
-          left: "30%",
-          background:
-            "linear-gradient(90deg, transparent, rgba(20,184,166,0.10), transparent)",
-        }}
-        animate={{ x: [-180, 460, -180], opacity: [0.1, 0.22, 0.1] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-      /> */}
+      <div className="absolute left-6 sm:left-12 top-16 sm:top-20 h-px w-36 sm:w-44 bg-teal-400/55" />
     </div>
   );
 }
@@ -131,22 +114,35 @@ export default function HeroIntro({ onJump }) {
       <HeroPointerGlow containerRef={heroRef} variant="beam" />
 
       {/* HUD TOP */}
-      <div className="absolute top-10 left-12 right-12 flex items-center justify-between">
-        <div className="mono text-[12px] tracking-[0.14em] text-white/45">
+      <div
+        className={[
+          "absolute flex items-center justify-between",
+          "top-6 left-6 right-6",
+          "sm:top-8 sm:left-8 sm:right-8",
+          "lg:top-10 lg:left-12 lg:right-12",
+        ].join(" ")}
+      >
+        <div className="mono text-[10px] sm:text-[12px] tracking-[0.14em] text-white/45">
           STATUS / PROFIL
         </div>
 
-        <div className="mono text-[12px] tracking-[0.14em] text-white/45">
+        <div className="mono text-[10px] sm:text-[12px] tracking-[0.14em] text-white/45">
           SIGNAL · LIVE
         </div>
       </div>
 
-      <div className="relative h-full px-12">
-        <div className="h-full grid grid-cols-12 gap-10 items-center">
+      <div
+        className={[
+          "relative h-full",
+          "px-6 sm:px-8 lg:px-12",
+          "pt-32 sm:pt-36 lg:pt-0",
+        ].join(" ")}
+      >
+        <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-start lg:items-center">
           {/* GAUCHE */}
-          <div className="col-span-6">
+          <div className="lg:col-span-6">
             <motion.h1
-              className="text-[92px] leading-[0.92] tracking-[-0.06em] font-semibold text-white"
+              className="text-[44px] sm:text-[64px] lg:text-[92px] leading-[0.92] tracking-[-0.06em] font-semibold text-white"
               initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.55, ease: "easeOut" }}
@@ -155,7 +151,7 @@ export default function HeroIntro({ onJump }) {
             </motion.h1>
 
             <motion.div
-              className="mt-6 flex items-center gap-5"
+              className="mt-6 flex items-center gap-5 flex-wrap"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.45, ease: "easeOut" }}
@@ -163,11 +159,11 @@ export default function HeroIntro({ onJump }) {
               <div className="mono text-[12px] tracking-[0.14em] text-white/75">
                 FRONT-END DEVELOPER · REACT
               </div>
-              <div className="h-px w-55 bg-teal-400/70" />
+              <div className="h-px w-32 sm:w-48 lg:w-55 bg-teal-400/70" />
             </motion.div>
 
             <motion.p
-              className="mt-8 text-[16px] leading-relaxed text-white/80 max-w-[56ch]"
+              className="mt-8 text-[15px] sm:text-[16px] leading-relaxed text-white/80 max-w-[56ch]"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.14, duration: 0.45, ease: "easeOut" }}
@@ -177,7 +173,7 @@ export default function HeroIntro({ onJump }) {
             </motion.p>
 
             <motion.div
-              className="mt-10 flex gap-4"
+              className="mt-10 mb-14 sm:mb-16 lg:mb-0 flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.45, ease: "easeOut" }}
@@ -189,8 +185,8 @@ export default function HeroIntro({ onJump }) {
             </motion.div>
           </div>
 
-          {/* DROITE */}
-          <div className="col-span-6">
+          {/* DROITE — DESKTOP ONLY */}
+          <div className="hidden lg:block lg:col-span-6">
             <motion.div
               className="border-l border-white/10 pl-10 h-130 flex flex-col justify-between"
               initial={{ opacity: 0, x: 14 }}
@@ -205,7 +201,6 @@ export default function HeroIntro({ onJump }) {
                 </div>
 
                 <div className="relative flex-1">
-                  {/* ligne de séparation sans décaler le texte */}
                   <div className="absolute left-0 right-0 -top-2 h-px bg-white/10" />
 
                   <Ticker
@@ -235,11 +230,18 @@ export default function HeroIntro({ onJump }) {
         </div>
 
         {/* HUD bas */}
-        <div className="absolute bottom-12 left-12 right-12 flex items-center justify-between">
-          <div className="mono text-[12px] tracking-[0.14em] text-white/40">
+        <div
+          className={[
+            // MOBILE: dans le flow (pas d'overlay)
+            "mt-10 flex flex-col gap-2",
+            // DESKTOP: overlay comme avant
+            "lg:mt-0 lg:absolute lg:bottom-12 lg:left-12 lg:right-12 lg:flex-row lg:items-center lg:justify-between",
+          ].join(" ")}
+        >
+          <div className="mono text-[10px] sm:text-[12px] tracking-[0.14em] text-white/40">
             VERDUN · METZ · NANCY · REMOTE POSSIBLE
           </div>
-          <div className="mono text-[12px] tracking-[0.14em] text-white/40">
+          <div className="mono text-[10px] sm:text-[12px] tracking-[0.14em] text-white/40">
             UTC+1 · DISPONIBLE
           </div>
         </div>

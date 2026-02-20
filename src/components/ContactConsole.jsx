@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
-import Reveal from "./Reveal"; // ajuste le chemin
+import Reveal from "./Reveal";
 
 const W3FORMS_ACCESS_KEY = "56a673df-e193-42c2-a070-2b3161195303";
 
@@ -14,13 +14,13 @@ const CHANNELS = [
   {
     label: "LinkedIn",
     meta: "Pro / réseau",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/aur%C3%A9lie-weber-a354b1340/",
     id: "linkedin",
   },
   {
     label: "GitHub",
     meta: "Code & projets",
-    href: "https://github.com",
+    href: "https://github.com/A-WEBerBeta",
     id: "github",
   },
 ];
@@ -56,7 +56,7 @@ function Chip({ active, onClick, children }) {
 
 function Underline() {
   return (
-    <div className="mt-6 h-px bg-white/10 overflow-hidden">
+    <div className="mt-5 sm:mt-6 h-px bg-white/10 overflow-hidden">
       <motion.div
         className="h-full bg-teal-400/55"
         initial={{ width: 0 }}
@@ -138,7 +138,7 @@ export default function ContactBriefV3() {
   const [sendState, setSendState] = useState("idle"); // idle | ok | err
   const [sendNote, setSendNote] = useState("");
 
-  // ✅ scan OK (2s)
+  // scan OK (2s)
   const [okPulse, setOkPulse] = useState(false);
   const [okScanKey, setOkScanKey] = useState(0);
   const okPulseTimer = useRef(null);
@@ -233,21 +233,21 @@ export default function ContactBriefV3() {
 
   return (
     <Reveal preset="scale" once={false} amount={0.18} className="h-full w-full">
-      <div className="h-full w-full px-12 flex items-center">
-        <div className="w-full grid grid-cols-12 gap-12 items-start">
+      <div className="h-full w-full px-5 sm:px-8 lg:px-12 flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* ===== GAUCHE ===== */}
           <Reveal
             preset="left"
             once={false}
             amount={0.22}
-            className="col-span-12 lg:col-span-4"
+            className="lg:col-span-4"
           >
-            <div className="text-white/65 text-[18px] max-w-[38ch]">
+            <div className="text-white/65 text-[16px] sm:text-[18px] max-w-[50ch]">
               Une question, un projet ou une opportunité ? Choisissez le canal
               que vous préférez — ou envoyez un message directement ici.
             </div>
 
-            <div className="mt-14 space-y-10">
+            <div className="mt-10 sm:mt-14 space-y-8 sm:space-y-10">
               {CHANNELS.map((c) => (
                 <Reveal
                   key={c.id}
@@ -262,7 +262,7 @@ export default function ContactBriefV3() {
                     rel="noreferrer"
                     className="group block"
                   >
-                    <div className="text-[30px] font-semibold text-white/85 group-hover:text-white transition-colors">
+                    <div className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold text-white/85 group-hover:text-white transition-colors">
                       {c.label}
                     </div>
                     <div className="mt-2 mono text-[12px] tracking-[0.18em] text-white/40">
@@ -274,7 +274,12 @@ export default function ContactBriefV3() {
               ))}
             </div>
 
-            <Reveal preset="up" once={false} amount={0.2} className="mt-16">
+            <Reveal
+              preset="up"
+              once={false}
+              amount={0.2}
+              className="mt-12 sm:mt-16"
+            >
               <div className="mono text-[12px] tracking-[0.18em] text-white/40">
                 VERDUN · METZ · NANCY · REMOTE POSSIBLE
               </div>
@@ -286,7 +291,7 @@ export default function ContactBriefV3() {
             preset="right"
             once={false}
             amount={0.22}
-            className="col-span-12 lg:col-span-8 border-l border-white/10 pl-10"
+            className="lg:col-span-8 lg:border-l border-white/10 lg:pl-10"
           >
             <Reveal preset="up" once={false} amount={0.3}>
               <div className="mono text-[12px] tracking-[0.18em] text-white/45">
@@ -295,7 +300,12 @@ export default function ContactBriefV3() {
             </Reveal>
 
             {/* INTENTION */}
-            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
+            <Reveal
+              preset="up"
+              once={false}
+              amount={0.25}
+              className="mt-8 sm:mt-10"
+            >
               <div className="mono text-[12px] tracking-[0.18em] text-white/35">
                 INTENTION
               </div>
@@ -321,7 +331,12 @@ export default function ContactBriefV3() {
             </Reveal>
 
             {/* TON */}
-            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
+            <Reveal
+              preset="up"
+              once={false}
+              amount={0.25}
+              className="mt-8 sm:mt-10"
+            >
               <div className="mono text-[12px] tracking-[0.18em] text-white/35">
                 TON
               </div>
@@ -343,9 +358,14 @@ export default function ContactBriefV3() {
             </Reveal>
 
             {/* IDENTITÉ */}
-            <Reveal preset="up" once={false} amount={0.25} className="mt-10">
-              <div className="grid grid-cols-12 gap-6">
-                <div className="col-span-12 md:col-span-6">
+            <Reveal
+              preset="up"
+              once={false}
+              amount={0.25}
+              className="mt-8 sm:mt-10"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div className="md:col-span-6">
                   <div className="mono text-[12px] tracking-[0.18em] text-white/35">
                     VOTRE NOM
                   </div>
@@ -357,7 +377,7 @@ export default function ContactBriefV3() {
                   />
                 </div>
 
-                <div className="col-span-12 md:col-span-6">
+                <div className="md:col-span-6">
                   <div className="mono text-[12px] tracking-[0.18em] text-white/35">
                     VOTRE EMAIL
                   </div>
@@ -372,14 +392,19 @@ export default function ContactBriefV3() {
             </Reveal>
 
             {/* MESSAGE */}
-            <Reveal preset="up" once={false} amount={0.22} className="mt-12">
+            <Reveal
+              preset="up"
+              once={false}
+              amount={0.22}
+              className="mt-10 sm:mt-12"
+            >
               <div className="border border-white/10 bg-black/10">
-                <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+                <div className="flex items-center justify-between border-b border-white/10 px-4 sm:px-5 py-4">
                   <div className="mono text-[12px] tracking-[0.18em] text-white/45">
                     MESSAGE
                   </div>
 
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-4 sm:gap-6">
                     <button
                       type="button"
                       onClick={reset}
@@ -404,10 +429,10 @@ export default function ContactBriefV3() {
                     if (!dirty) setDirty(true);
                     setMessage(e.target.value);
                   }}
-                  className="w-full h-60 bg-transparent text-[14px] leading-relaxed text-white/80 p-5 resize-none outline-none"
+                  className="w-full h-44 sm:h-56 lg:h-60 bg-transparent text-[14px] leading-relaxed text-white/80 p-4 sm:p-5 resize-none outline-none"
                 />
 
-                <div className="relative flex items-center justify-between border-t border-white/10 px-5 py-4 overflow-hidden">
+                <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-white/10 px-4 sm:px-5 py-4 overflow-hidden">
                   {okPulse ? (
                     <motion.div
                       key={okScanKey}
@@ -441,6 +466,7 @@ export default function ContactBriefV3() {
                     disabled={sending}
                     className={[
                       "mono text-[12px] tracking-[0.18em] border border-white/15 px-5 py-3 text-white/80 hover:text-white",
+                      "w-full sm:w-auto",
                       sending ? "opacity-60 cursor-not-allowed" : "",
                     ].join(" ")}
                   >
