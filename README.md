@@ -1,16 +1,97 @@
-# React + Vite
+# Portfolio V2 — Console Interface
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio built with React, Vite and Tailwind CSS.  
+Designed as a console-inspired interface combining clarity, motion and performance.
 
-Currently, two official plugins are available:
+Live: https://aweb-portfolio.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This portfolio presents selected projects, skills and background through a structured interface focused on readability and production-level quality.
 
-## Expanding the ESLint configuration
+The design emphasizes hierarchy, restrained motion and fast navigation rather than visual overload.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- React
+- Vite
+- Tailwind CSS v4
+- Framer Motion
+- Responsive design
+- Deployed on Vercel
+
+---
+
+## Features
+
+- Console-style navigation system
+- Section-based layout
+- Custom animated components
+- Project manifest with interactive preview
+- Video demo overlay
+- Contact console with message generator
+- Optimized assets and performance
+
+---
+
+## Performance
+
+Lighthouse (desktop):
+
+- Performance: 100
+- Accessibility: 94
+- Best Practices: 100
+- SEO: 91
+
+---
+
+## Project Structure
+
+```bash
+src/
+components/
+data/
+hooks/
+assets/
+```
+
+## Local Development
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run development server :
+
+```bash
+npm run dev
+```
+
+Build for production :
+
+```bash
+npm run build
+```
+
+---
+
+## Author
+
+Aurélie Weber
+Front-end Developer - React
+
+Portfolio: https://aweb-portfolio.vercel.app/
+
+LinkedIn: https://www.linkedin.com/in/aurélie-weber-a354b1340/
+
+GitHub: https://github.com/A-WEBerBeta
+
+## Notes
+
+This project is intended as a professional portfolio demonstrating front-end skills and UI implementation.
