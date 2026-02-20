@@ -5,7 +5,7 @@ export default function HeroPointerGlow({ containerRef, variant }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Inertie = spring (c'est là que tu règles le feeling)
+  // Inertie = spring (feeling)
   // Plus stiffness est grand => suit plus vite (moins d'inertie)
   // Plus damping est grand => s'arrête plus vite (moins d'oscillation)
   const sx = useSpring(x, { stiffness: 220, damping: 88, mass: 0.6 });
@@ -54,7 +54,7 @@ export default function HeroPointerGlow({ containerRef, variant }) {
       className="pointer-events-none absolute inset-0 z-5"
       aria-hidden="true"
     >
-      {/* ======= VARIANT: BEAM (console premium) ======= */}
+      {/* ======= VARIANT: BEAM (console) ======= */}
       {variant === "beam" && (
         <motion.div
           className="absolute top-0 bottom-0"
@@ -70,40 +70,6 @@ export default function HeroPointerGlow({ containerRef, variant }) {
             mixBlendMode: "screen",
           }}
         />
-      )}
-
-      {/* ======= VARIANT: DOUBLE BEAM (2 bandes holo) ======= */}
-      {variant === "double-beam" && (
-        <>
-          <motion.div
-            className="absolute top-0 bottom-0"
-            style={{
-              left: sx,
-              x: "-60%",
-              width: 140,
-              opacity: active ? 1 : 0,
-              transition: "opacity 220ms ease-out",
-              background:
-                "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.11) 55%, transparent 100%)",
-              filter: "blur(9px)",
-              mixBlendMode: "screen",
-            }}
-          />
-          <motion.div
-            className="absolute top-0 bottom-0"
-            style={{
-              left: sx,
-              x: "-10%",
-              width: 220,
-              opacity: active ? 1 : 0,
-              transition: "opacity 220ms ease-out",
-              background:
-                "linear-gradient(90deg, transparent 0%, rgba(20,184,166,0.08) 35%, rgba(20,184,166,0.16) 50%, rgba(20,184,166,0.08) 65%, transparent 100%)",
-              filter: "blur(12px)",
-              mixBlendMode: "screen",
-            }}
-          />
-        </>
       )}
 
       {/* ======= VARIANT: ORB  ======= */}

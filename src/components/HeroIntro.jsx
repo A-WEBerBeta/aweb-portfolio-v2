@@ -234,7 +234,7 @@ export default function HeroIntro({ onJump }) {
           className={[
             // MOBILE: dans le flow (pas d'overlay)
             "mt-10 flex flex-col gap-2",
-            // DESKTOP: overlay comme avant
+            // DESKTOP: overlay
             "lg:mt-0 lg:absolute lg:bottom-12 lg:left-12 lg:right-12 lg:flex-row lg:items-center lg:justify-between",
           ].join(" ")}
         >

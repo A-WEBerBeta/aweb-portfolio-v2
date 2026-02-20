@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
  * Rotation de slogans côté droit du hero
  * - Crossfade + léger slide vertical
  * - Boucle infinie
- * - Animation fluide et non intrusive
+ * - Animation fluide
  */
 export default function SignalRotator() {
   const groups = [

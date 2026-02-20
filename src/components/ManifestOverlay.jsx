@@ -63,7 +63,7 @@ export default function ManifestOverlay({ open, onClose, projects = [] }) {
           >
             {/* Header */}
             <div className="relative border-b border-white/10 px-6 py-4">
-              {/* repère ultra discret */}
+              {/* repère discret */}
               <div className="pointer-events-none absolute left-6 right-6 top-0 h-px bg-white/10" />
               <div className="pointer-events-none absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2">
                 <div className="h-full w-full border border-teal-400/35" />

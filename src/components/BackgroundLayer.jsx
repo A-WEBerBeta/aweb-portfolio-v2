@@ -43,7 +43,7 @@ export default function BackgroundLayer() {
         }}
       />
 
-      {/* Grain global (plus visible, mais propre) */}
+      {/* Grain global (plus visible) */}
       <div
         className="absolute inset-0 mix-blend-soft-light"
         style={{
@@ -64,7 +64,7 @@ export default function BackgroundLayer() {
         }}
       />
 
-      {/* Vignette : moins violente que 0.88 (LCD friendly) */}
+      {/* Vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_42%,rgba(0,0,0,0.72)_100%)]" />
     </div>
   );

@@ -3,11 +3,10 @@ import { motion } from "framer-motion";
 /*
   Reveal universel :
 
-  ✔ Scroll → animation
-  ✔ Clic nav → animation rejoue (via activeKey)
-  ✔ Delay pour stagger
-  ✔ Presets simples
-  ✔ Pas de hacks viewport partout
+  - Scroll → animation
+  - Clic nav → animation rejoue (via activeKey)
+  - Delay pour stagger
+  - Presets simples
 */
 
 const variants = {
@@ -77,8 +76,7 @@ export default function Reveal({
   amount = 0.25,
   margin = "0px 0px -12% 0px",
 
-  // 🔥 IMPORTANT :
-  // change cette valeur quand la section devient active
+  // Valeur à changer quand la section devient active
   // → force le replay même si déjà visible
   activeKey,
 
@@ -88,7 +86,7 @@ export default function Reveal({
 
   return (
     <motion.div
-      key={activeKey} // 🔥 le secret du replay propre
+      key={activeKey}
       className={className}
       variants={selected}
       custom={{ delay }}

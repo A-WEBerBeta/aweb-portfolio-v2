@@ -16,7 +16,7 @@ function Info({ label, value }) {
 function SignalField({ active }) {
   return (
     <Reveal preset="scale" once={false} amount={0.22} className="w-full">
-      <div className="relative w-full overflow-hidden min-h-[340px] sm:min-h-[420px] lg:min-h-130">
+      <div className="relative w-full overflow-hidden min-h-85 sm:min-h-105 lg:min-h-130">
         {/* filaments */}
         <motion.div
           className="absolute inset-0"
@@ -103,7 +103,7 @@ function SignalField({ active }) {
           ))}
         </motion.div>
 
-        {/* MICRO-INFOS — DESKTOP (overlay à droite comme avant) */}
+        {/* MICRO-INFOS — DESKTOP (overlay à droite) */}
         <Reveal
           preset="right"
           once={false}

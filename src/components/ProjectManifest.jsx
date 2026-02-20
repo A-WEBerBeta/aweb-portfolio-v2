@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Reveal from "./Reveal";
 
 /**
- * Convertit une URL YouTube (watch / youtu.be / embed) en URL embed.
+ * Convertit une URL YouTube en URL embed.
  * Retourne null si l'URL n'est pas reconnue.
  */
 function toYouTubeEmbed(url) {
@@ -12,7 +12,7 @@ function toYouTubeEmbed(url) {
   try {
     const u = new URL(url);
 
-    // youtu.be/<id>
+    // youtube/<id>
     if (u.hostname.includes("youtu.be")) {
       const id = u.pathname.replace("/", "");
       return id ? `https://www.youtube.com/embed/${id}` : null;
@@ -32,7 +32,7 @@ function toYouTubeEmbed(url) {
 }
 
 /**
- * Bouton de lien (anchor par défaut, ou button si onClick fourni)
+ * Bouton de lien (anchor par défaut)
  */
 function LinkBtn({ href, onClick, children, title }) {
   const className =
@@ -181,7 +181,7 @@ function VideoOverlay({ open, onClose, title, embedUrl }) {
 }
 
 /**
- * Drawer PROJETS (mobile premium)
+ * Drawer PROJETS (mobile)
  */
 function ProjectsDrawer({
   open,
@@ -381,8 +381,8 @@ function ProjectsDrawer({
 
 /**
  * Manifest "Mission Control"
- * - Desktop: 2 colonnes (inchangé)
- * - Mobile premium: Drawer "PROJETS" + dossier plein écran
+ * - Desktop: 2 colonnes
+ * - Mobile: Drawer "PROJETS" + dossier plein écran
  */
 export default function ProjectManifest({ primary = [], other = [] }) {
   const [lockedId, setLockedId] = useState(primary[0]?.id ?? null);
@@ -490,7 +490,7 @@ export default function ProjectManifest({ primary = [], other = [] }) {
         embedUrl={videoEmbed}
       />
 
-      {/* ===== Mobile drawer (premium) ===== */}
+      {/* ===== Mobile drawer ===== */}
       <ProjectsDrawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
