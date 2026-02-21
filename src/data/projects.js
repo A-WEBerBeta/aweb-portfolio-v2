@@ -1,3 +1,4 @@
+import kasaImg from "../assets/projects/kasa.png";
 import mokaImg from "../assets/projects/moka.png";
 import obsidianImg from "../assets/projects/obsidian.png";
 import portfolioImg from "../assets/projects/portfolio-v1.png";
@@ -87,22 +88,29 @@ export const primaryProjects = [
 
 export const otherProjects = [
   {
-    id: "oc-booki",
+    id: "kasa",
     index: "04",
-    title: "Booki",
+    title: "Kasa",
     subtitle: "OpenClassrooms",
-    stack: ["HTML", "CSS"],
-    year: "2024",
+    stack: ["React", "React Router", "JavaScript", "HTML", "CSS"],
+    year: "2025",
     role: "Intégration",
     status: "TERMINÉ",
-    tagline: "Fondations front.",
-    taglineSub: "Intégration responsive et structure HTML/CSS propre.",
+    tagline: "App React responsive.",
+    taglineSub: "Routing, composants réutilisables et UI fidèle à la maquette.",
     summary:
-      "Intégration responsive avec une attention portée à la structure et au layout.",
-    highlights: ["Responsive", "Flex / Grid", "Structure propre"],
-    image: null,
-    links: { live: "#", repo: "#" },
-    metaBadges: ["OC", "Intégration"],
+      "Application de location immobilière développée avec React à partir d’une maquette. Mise en place d’une navigation SPA avec React Router, pages dynamiques (logements), gestion des états UI (erreurs/404) et intégration responsive.",
+    highlights: [
+      "SPA + React Router (routes dynamiques)",
+      "Composants réutilisables (cards, carousel, accordéon)",
+      "Gestion des états UI (404, données manquantes)",
+      "Responsive (Flex/Grid) et structure CSS propre",
+    ],
+    image: kasaImg,
+    links: {
+      live: "https://kasa-zeta-murex.vercel.app/",
+      repo: "https://github.com/A-WEBerBeta/P11_Kasa",
+    },
+    metaBadges: ["OC", "React", "SPA", "Responsive"],
   },
-  // Ajoute les autres OC ici…
 ];
