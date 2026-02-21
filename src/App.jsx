@@ -101,7 +101,7 @@ export default function App() {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const { isDesktop, isUltraWide, collapsed, setCollapsed } =
+  const { isDesktop, isUltraWide, collapsed, toggleCollapsed } =
     useResponsiveNavWithOverride();
 
   return (
@@ -114,7 +114,7 @@ export default function App() {
           sections={sections}
           activeId={activeId}
           collapsed={collapsed}
-          onToggle={() => setCollapsed((v) => !v)}
+          onToggle={toggleCollapsed}
           onJump={jump}
           variant="rail"
         />
@@ -126,7 +126,7 @@ export default function App() {
           sections={sections}
           activeId={activeId}
           collapsed={false}
-          onToggle={() => {}}
+          onToggle={toggleCollapsed}
           onJump={jump}
           variant="drawer"
           open={menuOpen}
