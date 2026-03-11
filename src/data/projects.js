@@ -1,12 +1,41 @@
 import kasaImg from "../assets/projects/kasa.png";
+import macaronImg from "../assets/projects/macaron.png";
 import mokaImg from "../assets/projects/moka.png";
 import obsidianImg from "../assets/projects/obsidian.png";
-import portfolioImg from "../assets/projects/portfolio-v1.png";
+import v1Img from "../assets/projects/v1-projects.png";
 
 export const primaryProjects = [
   {
-    id: "obsidian-ink",
+    id: "hueboard",
     index: "01",
+    title: "HueBoard",
+    subtitle: "Outil visuel de création de moodboards",
+    stack: ["React", "Vite", "TailwindCSS", "dnd-kit"],
+    year: "2026",
+    role: "Front-end",
+    status: "EN DÉVELOPPEMENT",
+    tagline: "Composer, explorer, expérimenter.",
+    taglineSub:
+      "Un canvas interactif pour assembler palettes, typographies, images et formes dans un moodboard visuel.",
+    summary:
+      "Application React permettant de créer des moodboards interactifs. Les utilisateurs peuvent ajouter des éléments visuels (images, formes, typographies, palettes), les manipuler librement sur un canvas et générer des palettes de couleurs. Le projet explore les interactions modernes inspirées d’outils comme Figma ou Milanote.",
+    highlights: [
+      "Canvas interactif avec drag & drop (dnd-kit)",
+      "Ajout d’éléments : notes, shapes, typographies, images Unsplash et palettes",
+      "Génération de palettes via The Color API + extraction depuis images",
+      "Gestion de plusieurs boards avec sauvegarde locale",
+      "Export du moodboard en image (PNG)",
+    ],
+    image: macaronImg,
+    links: {
+      live: null,
+      repo: "https://github.com/A-WEBerBeta/hueboard",
+    },
+    metaBadges: ["WIP", "React", "Canvas", "Design Tool"],
+  },
+  {
+    id: "obsidian-ink",
+    index: "02",
     title: "Obsidian Ink",
     subtitle: "Studio Tattoo - site vitrine responsive",
     stack: ["React", "Vite", "Tailwind v4", "Framer Motion"],
@@ -32,7 +61,7 @@ export const primaryProjects = [
 
   {
     id: "moka-miel",
-    index: "02",
+    index: "03",
     title: "Moka & Miel",
     subtitle: "Cosy café & expérience de précommande",
     stack: ["WordPress", "Elementor", "CSS", "Responsive"],
@@ -59,7 +88,7 @@ export const primaryProjects = [
 
   {
     id: "portfolio-v1",
-    index: "03",
+    index: "04",
     title: "Portfolio V.1",
     subtitle: "Projet React - UI & architecture",
     stack: ["React", "Vite", "JavaScript", "CSS Modules"],
@@ -77,7 +106,7 @@ export const primaryProjects = [
       "Premiers choix UI + itérations (ce qui a mené à la V2)",
       "Projet “archive” documenté : utile pour montrer l’évolution",
     ],
-    image: portfolioImg,
+    image: v1Img,
     links: {
       live: null,
       repo: "https://github.com/A-WEBerBeta/aweb-portfolio#",
@@ -89,7 +118,7 @@ export const primaryProjects = [
 export const otherProjects = [
   {
     id: "kasa",
-    index: "04",
+    index: "05",
     title: "Kasa",
     subtitle: "OpenClassrooms",
     stack: ["React", "React Router", "JavaScript", "HTML", "CSS"],
