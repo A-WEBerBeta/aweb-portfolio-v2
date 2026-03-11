@@ -18,7 +18,7 @@ export const primaryProjects = [
     taglineSub:
       "Un canvas interactif pour assembler palettes, typographies, images et formes dans un moodboard visuel.",
     summary:
-      "Application React permettant de créer des moodboards interactifs. Les utilisateurs peuvent ajouter des éléments visuels (images, formes, typographies, palettes), les manipuler librement sur un canvas et générer des palettes de couleurs. Le projet explore les interactions modernes inspirées d’outils comme Figma ou Milanote.",
+      "Application React permettant de créer des moodboards interactifs. Les utilisateurs peuvent ajouter des éléments visuels (images, formes, typographies, palettes), les manipuler librement sur un canvas et générer des palettes de couleurs.",
     highlights: [
       "Canvas interactif avec drag & drop (dnd-kit)",
       "Ajout d’éléments : notes, shapes, typographies, images Unsplash et palettes",
