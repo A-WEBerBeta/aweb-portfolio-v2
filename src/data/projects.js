@@ -28,7 +28,7 @@ export const primaryProjects = [
     ],
     image: macaronImg,
     links: {
-      live: null,
+      live: "https://hueboard.vercel.app/",
       repo: "https://github.com/A-WEBerBeta/hueboard",
     },
     metaBadges: ["WIP", "React", "Canvas", "Design Tool"],
