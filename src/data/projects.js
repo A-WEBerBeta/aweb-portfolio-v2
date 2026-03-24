@@ -9,22 +9,26 @@ export const primaryProjects = [
     id: "hueboard",
     index: "01",
     title: "HueBoard",
-    subtitle: "Outil visuel de création de moodboards",
+    subtitle: "Outil de création de moodboards interactifs",
     stack: ["React", "Vite", "TailwindCSS", "dnd-kit"],
     year: "2026",
-    role: "Front-end",
+    role: "Front-end development",
     status: "EN DÉVELOPPEMENT",
-    tagline: "Composer, explorer, expérimenter.",
+
+    tagline: "Structurer l’inspiration, sans casser le flux créatif.",
+
     taglineSub:
-      "Un canvas interactif pour assembler palettes, typographies, images et formes dans un moodboard visuel.",
+      "Un espace visuel permettant d’assembler, manipuler et exporter des éléments graphiques dans un workflow fluide.",
+
     summary:
-      "Application React permettant de créer des moodboards interactifs. Les utilisateurs peuvent ajouter des éléments visuels (images, formes, typographies, palettes), les manipuler librement sur un canvas et générer des palettes de couleurs.",
+      "Conception d’un outil interactif permettant de centraliser et organiser des inspirations visuelles. L’interface repose sur un canvas manipulable librement, pensé pour reproduire un usage réel en phase de direction artistique ou de conception produit.",
+
     highlights: [
-      "Canvas interactif avec drag & drop (dnd-kit)",
-      "Ajout d’éléments : notes, shapes, typographies, images Unsplash et palettes",
-      "Génération de palettes via The Color API + extraction depuis images",
-      "Gestion de plusieurs boards avec sauvegarde locale",
-      "Export du moodboard en image (PNG)",
+      "Canvas interactif avec drag & drop permettant une manipulation libre des éléments",
+      "Structuration du state pour gérer plusieurs boards et leurs contenus",
+      "Intégration d’API externes pour enrichir les palettes et les assets visuels",
+      "Export du contenu en image pour faciliter le partage client ou équipe",
+      "Approche orientée outil : priorité donnée à la fluidité et à la lisibilité de l’interface",
     ],
     image: macaronImg,
     links: {
@@ -37,20 +41,25 @@ export const primaryProjects = [
     id: "obsidian-ink",
     index: "02",
     title: "Obsidian Ink",
-    subtitle: "Studio Tattoo - site vitrine responsive",
+    subtitle: "Site vitrine pour un studio créatif",
     stack: ["React", "Vite", "Tailwind v4", "Framer Motion"],
     year: "2026",
-    role: "Front-end",
+    role: "Front-end development",
     status: "ONLINE",
-    tagline: "Interface sombre. Détails nets.",
+
+    tagline: "Créer une ambiance sans nuire à l’expérience.",
+
     taglineSub:
-      "Une vitrine qui pose une ambiance, guide l’utilisateur, et reste rapide à parcourir.",
+      "Un site pensé pour valoriser une identité forte tout en gardant un parcours utilisateur clair et rapide.",
+
     summary:
-      "Site vitrine React pour un studio de tatouage fictif. Navigation claire, ambiance sombre maîtrisée et animations discrètes. Déployé sur Vercel avec un focus sur lisibilité et performance.",
+      "Réalisation d’un site vitrine avec une direction artistique marquée. Le travail s’est concentré sur l’équilibre entre esthétique et lisibilité, avec une navigation fluide et des animations discrètes pour ne pas impacter la performance ni la compréhension du contenu.",
+
     highlights: [
-      "Structure en sections + navigation latérale (parcours simple, repères clairs)",
-      "Animations Framer Motion (reveal, transitions) calibrées pour rester discrètes",
-      "Système de styles Tailwind cohérent (typo, espacements, états) sans surcharge",
+      "Hiérarchisation du contenu pour guider la lecture et la prise de contact",
+      "Animations limitées aux transitions utiles pour préserver la fluidité",
+      "Système de styles cohérent pour garantir homogénéité et maintenabilité",
+      "Optimisation du rendu sur mobile avec priorisation des contenus clés",
     ],
     image: obsidianImg,
     links: {
@@ -63,20 +72,25 @@ export const primaryProjects = [
     id: "moka-miel",
     index: "03",
     title: "Moka & Miel",
-    subtitle: "Cosy café & expérience de précommande",
+    subtitle: "Site vitrine orienté contenu",
     stack: ["WordPress", "Elementor", "CSS", "Responsive"],
     year: "2026",
-    role: "Intégration",
+    role: "Intégration front-end",
     status: "ONLINE",
-    tagline: "Chaleureux, lisible, efficace.",
+
+    tagline: "Rendre l’information accessible immédiatement.",
+
     taglineSub:
-      "Une vitrine WordPress orientée contenu : on trouve vite, on lit bien, on comprend.",
+      "Une vitrine pensée pour un usage rapide : consulter, comprendre, décider.",
+
     summary:
-      "Site vitrine WordPress pour un café fictif, centré sur la lisibilité et l’accès rapide aux informations clés. Mise en page chaleureuse et responsive optimisé pour mobile.",
+      "Intégration d’un site vitrine WordPress pour un café fictif, avec un focus sur la lisibilité et l’accès rapide aux informations essentielles. L’objectif était de structurer le contenu pour un usage mobile prioritaire et une consultation sans friction.",
+
     highlights: [
-      "Intégration Elementor : sections réutilisables + mise en page cohérente",
-      "Responsive : ajustements mobiles (typographies, espacements, priorités de contenu)",
-      "Structure de contenu pensée “vitrine” (infos clés accessibles rapidement)",
+      "Structuration du contenu pour accès rapide aux informations clés",
+      "Mise en place de sections réutilisables pour faciliter les évolutions",
+      "Optimisation mobile : adaptation des typographies et priorités visuelles",
+      "Logique éditoriale orientée utilisateur (horaires, menu, accès rapide)",
     ],
     image: mokaImg,
     links: {
@@ -85,7 +99,9 @@ export const primaryProjects = [
       demoVideo: "https://youtu.be/weJuvUnlI1g",
     },
   },
+];
 
+export const otherProjects = [
   {
     id: "portfolio-v1",
     index: "04",
@@ -95,11 +111,11 @@ export const primaryProjects = [
     year: "2025",
     role: "Front-end",
     status: "ARCHIVÉ",
-    tagline: "Point de départ.",
+    tagline: "Première itération.",
     taglineSub:
       "Base initiale avant la refonte : structure, composants, premières itérations UI.",
     summary:
-      "Première version de mon portfolio React. Base d’architecture, organisation des composants et premières explorations UI avant la refonte actuelle.",
+      "Version initiale de mon portfolio React. Base de travail ayant permis de structurer l’architecture et d’identifier les axes d’amélioration pour la version actuelle.",
     highlights: [
       "Mise en place des pages et composants de base (structure)",
       "Organisation du projet : dossiers, assets, styles (CSS Modules)",
@@ -113,9 +129,6 @@ export const primaryProjects = [
     },
     metaBadges: ["Archive", "React", "UI"],
   },
-];
-
-export const otherProjects = [
   {
     id: "kasa",
     index: "05",
@@ -125,10 +138,10 @@ export const otherProjects = [
     year: "2025",
     role: "Intégration",
     status: "TERMINÉ",
-    tagline: "App React responsive.",
+    tagline: "Construire une base solide en React.",
     taglineSub: "Routing, composants réutilisables et UI fidèle à la maquette.",
     summary:
-      "Application de location immobilière développée avec React à partir d’une maquette. Mise en place d’une navigation SPA avec React Router, pages dynamiques (logements), gestion des états UI (erreurs/404) et intégration responsive.",
+      "Projet de formation ayant permis de consolider les fondamentaux React : routing, composants réutilisables et gestion des états d’interface dans une application structurée.",
     highlights: [
       "SPA + React Router (routes dynamiques)",
       "Composants réutilisables (cards, carousel, accordéon)",
