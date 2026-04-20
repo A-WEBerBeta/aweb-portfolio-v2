@@ -12,7 +12,7 @@ export const primaryProjects = [
     subtitle: "Outil de création de moodboards interactifs",
     stack: ["React", "Vite", "TailwindCSS", "dnd-kit"],
     year: "2026",
-    role: "Front-end development",
+    role: "Front-end",
     status: "EN DÉVELOPPEMENT",
 
     tagline: "Structurer l’inspiration, sans casser le flux créatif.",
@@ -44,7 +44,7 @@ export const primaryProjects = [
     subtitle: "Site vitrine pour un studio créatif",
     stack: ["React", "Vite", "Tailwind v4", "Framer Motion"],
     year: "2026",
-    role: "Front-end development",
+    role: "Front-end",
     status: "ONLINE",
 
     tagline: "Créer une ambiance sans nuire à l’expérience.",

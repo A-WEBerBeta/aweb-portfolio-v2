@@ -12,7 +12,7 @@ function toYouTubeEmbed(url) {
   try {
     const u = new URL(url);
 
-    // youtube/<id>
+    // youtu.be/<id>
     if (u.hostname.includes("youtu.be")) {
       const id = u.pathname.replace("/", "");
       return id ? `https://www.youtube.com/embed/${id}` : null;
@@ -36,7 +36,7 @@ function toYouTubeEmbed(url) {
  */
 function LinkBtn({ href, onClick, children, title }) {
   const className =
-    "mono inline-flex items-center gap-2 border border-white/15 px-4 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white";
+    "mono inline-flex items-center gap-2 border border-white/15 px-4 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white";
 
   if (onClick) {
     return (
@@ -52,6 +52,7 @@ function LinkBtn({ href, onClick, children, title }) {
   }
 
   if (!href) return null;
+
   return (
     <a
       href={href}
@@ -116,6 +117,7 @@ function VideoOverlay({ open, onClose, title, embedUrl }) {
     const onKeyDown = (e) => {
       if (e.key === "Escape") onClose?.();
     };
+
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
@@ -130,7 +132,7 @@ function VideoOverlay({ open, onClose, title, embedUrl }) {
   const src = `${embedUrl}?autoplay=1&rel=0&modestbranding=1`;
 
   return (
-    <div className="fixed inset-0 z-9999">
+    <div className="fixed inset-0 z-[9999]">
       <button
         type="button"
         aria-label="Fermer la vidéo"
@@ -138,7 +140,7 @@ function VideoOverlay({ open, onClose, title, embedUrl }) {
         onClick={onClose}
       />
 
-      <div className="relative mx-auto flex h-full max-w-275 items-center px-4">
+      <div className="relative mx-auto flex h-full max-w-[1100px] items-center px-4">
         <div className="w-full border border-white/10 bg-black/60 backdrop-blur-sm">
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
             <div className="min-w-0">
@@ -152,7 +154,7 @@ function VideoOverlay({ open, onClose, title, embedUrl }) {
               ref={closeBtnRef}
               type="button"
               onClick={onClose}
-              className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white"
+              className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white"
             >
               FERMER <span className="text-white/40">×</span>
             </button>
@@ -195,7 +197,6 @@ function ProjectsDrawer({
   otherCount,
   closeTipNoop,
 }) {
-  // scroll lock + ESC
   useEffect(() => {
     if (!open) return;
 
@@ -205,6 +206,7 @@ function ProjectsDrawer({
     const onKey = (e) => {
       if (e.key === "Escape") onClose?.();
     };
+
     window.addEventListener("keydown", onKey);
 
     return () => {
@@ -214,8 +216,7 @@ function ProjectsDrawer({
   }, [open, onClose]);
 
   const ListContent = (
-    <div className="h-full min-h-0 flex flex-col">
-      {/* Header */}
+    <div className="flex h-full min-h-0 flex-col">
       <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
         <div className="mono ui-micro text-white/45">PROJETS</div>
 
@@ -224,16 +225,16 @@ function ProjectsDrawer({
             <button
               type="button"
               onClick={onToggleOther}
-              className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white"
+              className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white"
             >
-              {showOther ? "MASQUER" : "AUTRES"}
+              {showOther ? "MASQUER" : `AUTRES (${otherCount})`}
             </button>
           ) : null}
 
           <button
             type="button"
             onClick={onClose}
-            className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white"
+            className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white"
             aria-label="Fermer"
             title="Fermer"
           >
@@ -242,7 +243,6 @@ function ProjectsDrawer({
         </div>
       </div>
 
-      {/* Scroll list */}
       <div className="flex-1 min-h-0 overflow-auto">
         {list.map((p, idx) => {
           if (p.divider) {
@@ -264,13 +264,13 @@ function ProjectsDrawer({
               key={p.id}
               type="button"
               onClick={() => onPick(p.id)}
-              className="group w-full border-b border-white/10 text-left hover:bg-white/2 transition-colors"
+              className="group w-full border-b border-white/10 text-left transition-colors hover:bg-white/[0.02]"
               onMouseEnter={() => closeTipNoop?.()}
               onMouseLeave={() => closeTipNoop?.()}
               onFocus={() => closeTipNoop?.()}
               onBlur={() => closeTipNoop?.()}
             >
-              <div className="px-5 py-6 min-h-35">
+              <div className="min-h-[140px] px-5 py-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 mono text-[11px] tracking-[0.25em] tabular-nums text-white/35">
                     {p.index ?? String(idx + 1).padStart(2, "0")}
@@ -347,21 +347,19 @@ function ProjectsDrawer({
     <AnimatePresence>
       {open ? (
         <>
-          {/* Backdrop */}
           <motion.button
             type="button"
             aria-label="Fermer la liste"
-            className="fixed inset-0 z-9998 bg-black/55 backdrop-blur-[1px] lg:hidden"
+            className="fixed inset-0 z-[9998] bg-black/55 backdrop-blur-[1px] lg:hidden"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
 
-          {/* Panel */}
           <motion.aside
             className={[
-              "fixed left-0 top-0 z-9999 h-dvh w-[min(360px,92vw)]",
+              "fixed left-0 top-0 z-[9999] h-dvh w-[min(360px,92vw)]",
               "border-r border-white/10 bg-[rgba(10,11,13,0.86)] backdrop-blur-[3px]",
               "shadow-[inset_-1px_0_0_rgba(255,255,255,0.06)]",
               "lg:hidden",
@@ -380,6 +378,30 @@ function ProjectsDrawer({
 }
 
 /**
+ * Fade de scroll pour sidebar desktop
+ */
+function ScrollFades({ topVisible, bottomVisible }) {
+  return (
+    <>
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 right-0 top-0 h-10 bg-gradient-to-b from-black/55 to-transparent"
+        initial={false}
+        animate={{ opacity: topVisible ? 1 : 0 }}
+        transition={{ duration: 0.18 }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/60 to-transparent"
+        initial={false}
+        animate={{ opacity: bottomVisible ? 1 : 0 }}
+        transition={{ duration: 0.18 }}
+      />
+    </>
+  );
+}
+
+/**
  * Manifest "Mission Control"
  * - Desktop: 2 colonnes
  * - Mobile: Drawer "PROJETS" + dossier plein écran
@@ -389,13 +411,15 @@ export default function ProjectManifest({ primary = [], other = [] }) {
   const [hoverId, setHoverId] = useState(null);
   const [showOther, setShowOther] = useState(false);
 
-  // Mobile: drawer
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  // Overlay vidéo
   const [videoForId, setVideoForId] = useState(null);
 
-  // Throttle hover (RAF)
+  const [showTopFade, setShowTopFade] = useState(false);
+  const [showBottomFade, setShowBottomFade] = useState(false);
+
+  const desktopListRef = useRef(null);
+  const otherDividerRef = useRef(null);
+
   const hoverRaf = useRef(null);
   const setHoverRaf = (id) => {
     if (hoverRaf.current) cancelAnimationFrame(hoverRaf.current);
@@ -431,12 +455,60 @@ export default function ProjectManifest({ primary = [], other = [] }) {
     videoEmbed && active?.id && videoForId === active.id,
   );
 
+  const updateDesktopScrollState = () => {
+    const el = desktopListRef.current;
+    if (!el) return;
+
+    const hasScrollableContent = el.scrollHeight > el.clientHeight + 2;
+    const atTop = el.scrollTop <= 2;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+
+    setShowTopFade(hasScrollableContent && !atTop);
+    setShowBottomFade(hasScrollableContent && !atBottom);
+  };
+
+  useEffect(() => {
+    updateDesktopScrollState();
+  }, [list]);
+
+  useEffect(() => {
+    const el = desktopListRef.current;
+    if (!el) return;
+
+    updateDesktopScrollState();
+
+    const onScroll = () => updateDesktopScrollState();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateDesktopScrollState);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateDesktopScrollState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showOther) return;
+
+    const scroller = desktopListRef.current;
+    const divider = otherDividerRef.current;
+
+    if (!scroller || !divider) return;
+
+    const raf = requestAnimationFrame(() => {
+      scroller.scrollTo({
+        top: Math.max(0, divider.offsetTop - 16),
+        behavior: "smooth",
+      });
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [showOther]);
+
   useEffect(() => {
     const onKeyDown = (e) => {
       const tag = document.activeElement?.tagName?.toLowerCase();
       if (tag === "input" || tag === "textarea" || tag === "select") return;
-
-      // si drawer mobile ouvert, on évite navigation clavier du dossier
       if (drawerOpen) return;
 
       if (e.key === "ArrowDown") {
@@ -481,8 +553,12 @@ export default function ProjectManifest({ primary = [], other = [] }) {
     setDrawerOpen(false);
   };
 
+  const toggleOtherDesktop = () => {
+    setShowOther((prev) => !prev);
+  };
+
   return (
-    <Reveal preset="scale" amount={0.2} once={false} className="h-full">
+    <Reveal preset="scale" amount={0.2} once={false} className="h-full min-h-0">
       <VideoOverlay
         open={isVideoOpen}
         onClose={closeDemo}
@@ -490,7 +566,6 @@ export default function ProjectManifest({ primary = [], other = [] }) {
         embedUrl={videoEmbed}
       />
 
-      {/* ===== Mobile drawer ===== */}
       <ProjectsDrawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
@@ -501,13 +576,12 @@ export default function ProjectManifest({ primary = [], other = [] }) {
         showOther={showOther}
         onToggleOther={() => setShowOther((v) => !v)}
         otherCount={other?.length ?? 0}
-        setHoverRaf={setHoverRaf}
         closeTipNoop={() => {}}
       />
 
-      <div className="border border-white/10 bg-black/15 overflow-hidden h-full">
+      <div className="h-full min-h-0 overflow-hidden border border-white/10 bg-black/15">
         {/* ===== MOBILE: top bar actions ===== */}
-        <div className="lg:hidden border-b border-white/10 px-5 py-4 flex items-center justify-between">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 lg:hidden">
           <div className="min-w-0">
             <div className="mono ui-micro text-white/35">DOSSIER</div>
             <div className="mt-1 truncate ui-body text-white/80">
@@ -518,149 +592,181 @@ export default function ProjectManifest({ primary = [], other = [] }) {
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
-            className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white"
+            className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white"
           >
             PROJETS <span className="text-white/40">≡</span>
           </button>
         </div>
 
-        {/* ===== DESKTOP GRID  ===== */}
-        <div className="hidden lg:grid h-full grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)]">
+        {/* ===== DESKTOP GRID ===== */}
+        <div className="hidden h-full min-h-0 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)] 2xl:grid-cols-[380px_minmax(0,1fr)]">
           {/* =========================
             COLONNE GAUCHE : LISTE
-           ========================= */}
-          <Reveal preset="left" amount={0.25} once={false} className="h-full">
-            <div className="h-full border-r border-white/10">
+          ========================= */}
+          <Reveal
+            preset="left"
+            amount={0.25}
+            once={false}
+            className="h-full min-h-0"
+          >
+            <div className="flex h-full min-h-0 flex-col border-r border-white/10">
               <Reveal preset="up" amount={0.6} once={false}>
-                <div className="flex items-center justify-between border-b border-white/10 px-4 xl:px-5 py-4">
-                  <div className="mono ui-micro text-white/45">PROJETS</div>
+                <div className="border-b border-white/10 px-4 py-4 xl:px-5">
+                  <div className="flex items-center justify-between">
+                    <div className="mono ui-micro text-white/45">PROJETS</div>
 
-                  {other?.length ? (
-                    <button
-                      type="button"
-                      onClick={() => setShowOther((v) => !v)}
-                      className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 hover:text-white"
-                    >
-                      {showOther ? "MASQUER" : "AUTRES"}
-                    </button>
-                  ) : null}
+                    {other?.length ? (
+                      <button
+                        type="button"
+                        onClick={toggleOtherDesktop}
+                        className="mono border border-white/15 px-3 py-2 ui-micro tracking-[0.25em] text-white/70 transition-colors hover:text-white"
+                      >
+                        {showOther ? "MASQUER" : `AUTRES (${other.length})`}
+                      </button>
+                    ) : null}
+                  </div>
+
+                  <div className="mono mt-3 text-[11px] tracking-[0.18em] text-white/30">
+                    SURVOL = APERÇU / CLIC = VERROUILLER
+                  </div>
                 </div>
               </Reveal>
 
-              <div className="h-[calc(100%-57px)] overflow-auto">
-                {list.map((p, idx) => {
-                  if (p.divider) {
+              <div className="relative flex-1 min-h-0">
+                <div
+                  ref={desktopListRef}
+                  className="h-full overflow-auto overscroll-contain scroll-smooth"
+                >
+                  {list.map((p, idx) => {
+                    if (p.divider) {
+                      return (
+                        <div
+                          key="divider"
+                          ref={otherDividerRef}
+                          className="px-4 py-6 xl:px-5"
+                        >
+                          <div className="h-px bg-white/10" />
+                          <div className="mono ui-micro mt-3 text-white/35">
+                            AUTRES PROJETS
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    const isActive = p.id === activeId;
+                    const isLocked = p.id === lockedId;
+
                     return (
-                      <div key="divider" className="px-4 xl:px-5 py-6">
-                        <div className="h-px bg-white/10" />
-                        <div className="mono ui-micro mt-3 text-white/35">
-                          AUTRES PROJETS
-                        </div>
-                      </div>
-                    );
-                  }
+                      <button
+                        key={p.id}
+                        type="button"
+                        onMouseEnter={() => setHoverRaf(p.id)}
+                        onMouseLeave={() => setHoverRaf(null)}
+                        onFocus={() => setHoverRaf(p.id)}
+                        onBlur={() => setHoverRaf(null)}
+                        onClick={() => setLockedId(p.id)}
+                        className="group w-full border-b border-white/10 text-left transition-colors hover:bg-white/[0.02]"
+                      >
+                        <div className="min-h-[140px] px-4 py-6 xl:px-5">
+                          <div className="flex items-start gap-4">
+                            <div className="w-10 mono text-[11px] tracking-[0.25em] tabular-nums text-white/35">
+                              {p.index ?? String(idx + 1).padStart(2, "0")}
+                            </div>
 
-                  const isActive = p.id === activeId;
-                  const isLocked = p.id === lockedId;
-
-                  return (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onMouseEnter={() => setHoverRaf(p.id)}
-                      onMouseLeave={() => setHoverRaf(null)}
-                      onFocus={() => setHoverRaf(p.id)}
-                      onBlur={() => setHoverRaf(null)}
-                      onClick={() => setLockedId(p.id)}
-                      className="group w-full border-b border-white/10 text-left"
-                    >
-                      <div className="px-4 xl:px-5 py-6 min-h-35">
-                        <div className="flex items-start gap-4">
-                          <div className="w-10 mono text-[11px] tracking-[0.25em] tabular-nums text-white/35">
-                            {p.index ?? String(idx + 1).padStart(2, "0")}
-                          </div>
-
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between gap-3">
-                              <div
-                                className={[
-                                  "truncate ui-body font-medium tracking-wide",
-                                  isActive ? "text-white" : "text-white/75",
-                                ].join(" ")}
-                              >
-                                {p.title}
-                              </div>
-
-                              <div className="flex items-center gap-3">
-                                <div className="mono ui-micro tracking-[0.25em] text-white/35">
-                                  {p.year ?? ""}
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-3">
+                                <div
+                                  className={[
+                                    "truncate ui-body font-medium tracking-wide",
+                                    isActive ? "text-white" : "text-white/75",
+                                  ].join(" ")}
+                                >
+                                  {p.title}
                                 </div>
 
-                                <div className="h-2 w-2 border border-white/25">
-                                  <div
-                                    className={[
-                                      "h-full w-full",
-                                      isLocked
-                                        ? "bg-teal-400/80"
-                                        : isActive
-                                          ? "bg-white/40"
-                                          : "bg-transparent",
-                                    ].join(" ")}
+                                <div className="flex items-center gap-3">
+                                  <div className="mono ui-micro tracking-[0.25em] text-white/35">
+                                    {p.year ?? ""}
+                                  </div>
+
+                                  <div className="h-2 w-2 border border-white/25">
+                                    <div
+                                      className={[
+                                        "h-full w-full",
+                                        isLocked
+                                          ? "bg-teal-400/80"
+                                          : isActive
+                                            ? "bg-white/40"
+                                            : "bg-transparent",
+                                      ].join(" ")}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="mt-2 ui-meta text-white/55">
+                                {p.subtitle}
+                              </div>
+
+                              <div className="mt-4">
+                                <motion.div
+                                  initial={false}
+                                  animate={{ opacity: isActive ? 1 : 0 }}
+                                  transition={{ duration: 0.15 }}
+                                  className="pointer-events-none"
+                                >
+                                  <BadgeLine
+                                    items={
+                                      p.metaBadges?.length
+                                        ? p.metaBadges
+                                        : (p.stack ?? [])
+                                    }
                                   />
-                                </div>
+                                </motion.div>
+                              </div>
+
+                              <div className="mt-4 flex items-center gap-3 mono ui-micro tracking-[0.25em] text-white/35">
+                                <span className="border border-white/10 px-2 py-1">
+                                  {p.status ?? "—"}
+                                </span>
+                                <span className="text-white/25">/</span>
+                                <span>
+                                  {String(p.role ?? "—").toUpperCase()}
+                                </span>
                               </div>
                             </div>
-
-                            <div className="mt-2 ui-meta text-white/55">
-                              {p.subtitle}
-                            </div>
-
-                            <div className="mt-4">
-                              <motion.div
-                                initial={false}
-                                animate={{ opacity: isActive ? 1 : 0 }}
-                                transition={{ duration: 0.15 }}
-                                className="pointer-events-none"
-                              >
-                                <BadgeLine
-                                  items={
-                                    p.metaBadges?.length
-                                      ? p.metaBadges
-                                      : (p.stack ?? [])
-                                  }
-                                />
-                              </motion.div>
-                            </div>
-
-                            <div className="mt-4 flex items-center gap-3 mono ui-micro tracking-[0.25em] text-white/35">
-                              <span className="border border-white/10 px-2 py-1">
-                                {p.status ?? "—"}
-                              </span>
-                              <span className="text-white/25">/</span>
-                              <span>{String(p.role ?? "—").toUpperCase()}</span>
-                            </div>
                           </div>
-                        </div>
 
-                        <motion.div
-                          initial={false}
-                          animate={{ opacity: isActive ? 1 : 0 }}
-                          transition={{ duration: 0.15 }}
-                          className="mt-6 h-px bg-white/15"
-                        />
-                      </div>
-                    </button>
-                  );
-                })}
+                          <motion.div
+                            initial={false}
+                            animate={{ opacity: isActive ? 1 : 0 }}
+                            transition={{ duration: 0.15 }}
+                            className="mt-6 h-px bg-white/15"
+                          />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <ScrollFades
+                  topVisible={showTopFade}
+                  bottomVisible={showBottomFade}
+                />
               </div>
             </div>
           </Reveal>
 
           {/* =========================
             COLONNE DROITE : DOSSIER
-           ========================= */}
-          <Reveal preset="right" amount={0.25} once={false} className="h-full">
-            <div className="h-full">
+          ========================= */}
+          <Reveal
+            preset="right"
+            amount={0.25}
+            once={false}
+            className="h-full min-h-0"
+          >
+            <div className="flex h-full min-h-0 flex-col">
               <div className="flex items-start justify-between border-b border-white/10 px-6 py-5">
                 <div className="min-w-0">
                   <div className="mono ui-micro text-white/35">DOSSIER</div>
@@ -689,7 +795,7 @@ export default function ProjectManifest({ primary = [], other = [] }) {
                 </div>
               </div>
 
-              <div className="h-[calc(100%-73px)] overflow-auto">
+              <div className="flex-1 min-h-0 overflow-auto">
                 <div className="border-b border-white/10 bg-black/25">
                   <div className="grid grid-cols-12 gap-8 px-6 py-7">
                     <div className="col-span-7">
@@ -721,14 +827,14 @@ export default function ProjectManifest({ primary = [], other = [] }) {
 
                     <div className="col-span-5">
                       <div className="border border-white/10 bg-black/30">
-                        <div className="flex h-105 max-h-[52vh] w-full items-center justify-center p-4">
+                        <div className="flex h-[420px] max-h-[52vh] w-full items-center justify-center p-4">
                           {active?.image ? (
                             <motion.img
                               key={active.id}
                               src={active.image}
                               alt={active.title}
                               className="max-h-full max-w-full object-contain opacity-85"
-                              initial={{ opacity: 0.0 }}
+                              initial={{ opacity: 0 }}
                               animate={{ opacity: 0.85 }}
                               transition={{ duration: 0.2 }}
                             />
@@ -741,10 +847,10 @@ export default function ProjectManifest({ primary = [], other = [] }) {
 
                         <div className="pointer-events-none relative">
                           <div className="absolute left-4 right-4 top-1/2 h-px bg-white/10" />
-                          <div className="absolute top-4 bottom-4 left-1/2 w-px bg-white/5" />
+                          <div className="absolute bottom-4 top-4 left-1/2 w-px bg-white/5" />
                           <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2">
                             <div className="h-full w-full border border-teal-400/35" />
-                            <div className="absolute inset-0 bg-teal-400/20 blur-md animate-[pulse_4s_ease-in-out_infinite]" />
+                            <div className="absolute inset-0 animate-[pulse_4s_ease-in-out_infinite] bg-teal-400/20 blur-md" />
                           </div>
                           <div className="h-0" />
                         </div>
@@ -789,24 +895,19 @@ export default function ProjectManifest({ primary = [], other = [] }) {
                       <Stat label="ANNÉE" value={active?.year} />
                     </div>
                   </div>
-
-                  <div className="mono mt-10 text-[11px] text-white/35">
-                    SURVOL = APERÇU / CLIC = VERROUILLER
-                  </div>
                 </div>
               </div>
             </div>
           </Reveal>
         </div>
 
-        {/* ===== MOBILE: dossier en flow (pas de double scroll) ===== */}
+        {/* ===== MOBILE: dossier en flow ===== */}
         <div className="lg:hidden">
-          {/* Header dossier (déjà en haut) => on affiche juste le contenu */}
           <div className="border-b border-white/10 bg-black/25">
             <div className="px-6 py-7">
               <div className="mono ui-micro text-white/35">APERÇU</div>
 
-              <div className="mt-6 text-[34px] sm:text-[40px] font-semibold leading-[1.05] text-white/85">
+              <div className="mt-6 text-[34px] font-semibold leading-[1.05] text-white/85 sm:text-[40px]">
                 {active?.tagline ?? "Interface sobre. Impact net."}
               </div>
 
@@ -818,6 +919,7 @@ export default function ProjectManifest({ primary = [], other = [] }) {
               <div className="mt-7 flex flex-wrap gap-3">
                 <LinkBtn href={active?.links?.live}>SITE</LinkBtn>
                 <LinkBtn href={active?.links?.repo}>CODE</LinkBtn>
+
                 {videoEmbed ? (
                   <LinkBtn onClick={openDemo} title="Ouvrir la démo vidéo">
                     DÉMO
@@ -833,7 +935,7 @@ export default function ProjectManifest({ primary = [], other = [] }) {
                       src={active?.image}
                       alt={active?.title}
                       className="max-h-full max-w-full object-contain opacity-85"
-                      initial={{ opacity: 0.0 }}
+                      initial={{ opacity: 0 }}
                       animate={{ opacity: 0.85 }}
                       transition={{ duration: 0.2 }}
                     />
@@ -883,8 +985,8 @@ export default function ProjectManifest({ primary = [], other = [] }) {
               </div>
             </div>
 
-            <div className="mono mt-10 text-[11px] text-white/35">
-              TAP = OUVRIR PROJETS / CLIC = VERROUILLER
+            <div className="mono mt-10 text-[11px] tracking-[0.18em] text-white/35">
+              TAP = OUVRIR PROJETS / TAP = SÉLECTIONNER
             </div>
           </div>
         </div>
